@@ -1,0 +1,63 @@
+.header {
+	position: relative;
+	height: 85vh;
+	background-image: 
+		linear-gradient(
+			to right bottom, 
+			rgba($color-primary-light, 0.8),
+			rgba($color-primary-dark, 0.8)),
+		url(../img/hero-small.jpg);
+	background-size: cover;
+	background-position: top center;
+    
+    /*
+    Mainly for firefox, as it does not support clip-path. In this case,
+    the height is reduced so the user knows to scroll.
+    */
+    
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+        height: 95vh;
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
+    }
+
+    /* 
+    The original bg-image is 2000px. The smaller version is 1200px.
+    High resolution screens (192dpi+) will want the bigger file.
+    Phones usually always have a 2X resolution. However, even at 600px screen width,
+    that means a 1200px wide image should still be enough to cover the screen. 
+    -webkit-min-device-pixel-ratio: 2 is a safari-specific query
+    since it does not support min-resolution for retina screens.
+    */
+
+    @media (min-resolution: 192dpi) and (min-width: 37.5em),
+           (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+           (min-width: 125em) {
+        background-image: 
+		linear-gradient(
+			to right bottom, 
+			rgba($color-primary-light, 0.8),
+			rgba($color-primary-dark, 0.8)),
+		url(../img/hero.jpg);
+    }
+
+    @include respond(phone) {	
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    }
+
+    &__logo-box {
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+    }
+
+    &__logo {
+        height: 3.5rem;
+    }
+
+    &__text-box {
+        @include center-horiz-and-vertical;
+        text-align: center;
+    }
+}
